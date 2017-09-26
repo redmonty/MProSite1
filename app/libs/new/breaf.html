@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+    //start section with test
+.heading2
+  background: #fff
+  color: darkgrey
+  &-right-header2
+    color: $mainColor
+    margin-bottom: 1.4em
+    +media-breakpoint-down(md)
+      font-size: 1.6em
+    +media-breakpoint-down(sm)
+      font-size: 1.2em
+  .testContainer
+    width: 90%
+    padding: 1em 0
+    min-width: 300px
+    margin: 0 auto
+    margin-top: 2em
+    min-height: 100px
+    background: lightgrey
+    text-align: left
+    .question
+      font-size: 1.2em
+      font-style: italic
+      color: $mainColor
+      list-style: none
+      padding-left: 0
+      span 
+        padding-left: 1em
+      li 
+        font-size: .8em
+        color: #000
+        font-style: normal
+        padding: 1em
+        transition: all .5s ease
+        cursor: pointer
+
+        &:hover
+          color: $mainColor
+          background: #fff
+        
+
+//===================end section with breaf test
+    </style>
+</head>
+<body>
+    <section class="container-fluid heading heading2" >
+  <div class="heading-left">
+    <div class="testContainer" id="test">
+      <div class="questions"v-if="!testStart">
+        <ul class="question">
+          <span> {{questions[questionCounter]}} </span>
+          <li @click="nextQuestion" v-for="(answer, index) in answers[questionCounter]" :key="answer.key" :id="answer.id">{{answer.answer}}</li>
+        </ul>
+      </div>
+      <h1 v-else>{{msg}}</h1>
+    </div>
+  </div>
+  <div class="heading-right">
+    <h3 class="heading2-right-header2">Зачем нужен бриф-тест?</h3>
+    <div class="heading-right-content">
+      <p>Интернет на сегодняшний день предлагает широчайший выбор инструментов и подходов для реализации бизнеса.</p>
+      <p>Но чтобы прийти к хорошим результатам, каждый проэкт требует индивидуальных принципов создания.</p>
+      <p>Цель бриф-теста - помочь Вам понять что же подойдет лучше для успешного старта идеи.</p>
+    </div>
+  </div>
+</section>
+
+<script>
+      var app = new Vue({
+    el: '#test',
+    data: {
+      testStart: false,
+      questionCounter: 0,
+      landCounter: 0,
+      siteCounter: 0,
+      marketingCounter: 0,
+      msg: '',
+      questions: ['Первый вопрос', 'Второй вопрос', 'Третий вопрос'],
+      answers: [
+        [{answer: 'Ответ 1 на первый вопрос',id:1},
+        {answer: 'Ответ 2 на первый вопрос',id:2},
+        {answer: 'Ответ 3 на первый вопрос',id:3}],
+        [{answer: 'Ответ 1 на второй вопрос',id:1},
+        {answer: 'Ответ 2 на второй вопрос',id:2},
+        {answer: 'Ответ 3 на второй вопрос',id:3}],
+        [{answer: 'Ответ 1 на третий вопрос',id:1},
+        {answer: 'Ответ 2 на третий вопрос',id:2},
+        {answer: 'Ответ 3 на третий вопрос',id:3}]
+      ]
+    },
+    methods: {
+      nextQuestion(e) {
+        this.questionCounter++;
+        if(this.questionCounter == this.questions.length) {
+          this.questionCounter = this.questions.length-1;
+          alert('Спасибо, что прошли тест');
+          this.testStart = !this.testStart;  
+        }
+        if(e.target.id == 1) this.landCounter++;
+        if(e.target.id == 2) this.siteCounter++;
+        if(e.target.id == 3) this.marketingCounter++;
+        
+        if(this.landCounter>=2) this.msg = "Спасибо, что прошли тест, мы считаем Вам нужен Лэндинг";
+        if(this.siteCounter>=2) this.msg = "Спасибо, что прошли тест, мы считаем Вам нужен Сайт";
+        else this.msg = "Спасибо, что прошли тест, мы считаем Вам нужна помощь маркетологов";
+      }
+    }
+  });
+</script>
+</body>
+</html>
